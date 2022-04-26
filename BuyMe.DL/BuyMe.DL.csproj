@@ -1,0 +1,35 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Migrations\20220425165014_Add Orders.cs" />
+    <Compile Remove="Migrations\20220425165014_Add Orders.Designer.cs" />
+    <Compile Remove="Migrations\20220425165931_Add-Orders.cs" />
+    <Compile Remove="Migrations\20220425165931_Add-Orders.Designer.cs" />
+    <Compile Remove="Migrations\20220425170400_Add Order Table.cs" />
+    <Compile Remove="Migrations\20220425170400_Add Order Table.Designer.cs" />
+    <Compile Remove="Migrations\20220425170730_Add Order Table.cs" />
+    <Compile Remove="Migrations\20220425170730_Add Order Table.Designer.cs" />
+    <Compile Remove="Migrations\20220425172016_Add Order.cs" />
+    <Compile Remove="Migrations\20220425172016_Add Order.Designer.cs" />
+    <Compile Remove="Migrations\20220425175333_update-order.cs" />
+    <Compile Remove="Migrations\20220425175333_update-order.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+</Project>

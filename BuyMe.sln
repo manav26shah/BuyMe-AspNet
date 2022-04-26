@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31729.503
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BuyMe.API", "BuyMe.API\BuyMe.API.csproj", "{BC95CFC5-824B-49DA-ADD2-E5D14A29AB76}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BuyMe.BL", "BuyMe.BL\BuyMe.BL.csproj", "{9659B32D-F904-443A-95A9-1FE00E6C3FD4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BuyMe.DL", "BuyMe.DL\BuyMe.DL.csproj", "{05CBC748-9D23-4BCF-B2C3-DE280758971F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BC95CFC5-824B-49DA-ADD2-E5D14A29AB76}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BC95CFC5-824B-49DA-ADD2-E5D14A29AB76}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BC95CFC5-824B-49DA-ADD2-E5D14A29AB76}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BC95CFC5-824B-49DA-ADD2-E5D14A29AB76}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9659B32D-F904-443A-95A9-1FE00E6C3FD4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9659B32D-F904-443A-95A9-1FE00E6C3FD4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9659B32D-F904-443A-95A9-1FE00E6C3FD4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9659B32D-F904-443A-95A9-1FE00E6C3FD4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{05CBC748-9D23-4BCF-B2C3-DE280758971F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{05CBC748-9D23-4BCF-B2C3-DE280758971F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{05CBC748-9D23-4BCF-B2C3-DE280758971F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{05CBC748-9D23-4BCF-B2C3-DE280758971F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1987523A-56A0-48A2-BFC1-BE98919A9288}
+	EndGlobalSection
+EndGlobal
