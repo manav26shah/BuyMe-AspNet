@@ -25,14 +25,19 @@ namespace BuyMe.API.Controllers
     public class LoginController : ControllerBase
     {
         private readonly UserManager<IdentityUser> _userManager;
+        private readonly SignInManager<IdentityUser> _signInManager;
         private readonly JWTConfig _jwtConfig;
 
-        public LoginController(UserManager<IdentityUser> userManager, IOptionsMonitor<JWTConfig> jwtConfig)
+        public LoginController(UserManager<IdentityUser> userManager, IOptionsMonitor<JWTConfig> jwtConfig, SignInManager<IdentityUser> signInManager)
         {
             _userManager = userManager;
             _jwtConfig = jwtConfig.CurrentValue;
+            _signInManager = signInManager;
         }
 
+        /// <summary>
+        /// API to register new user
+        /// </summary>
         [HttpPost]
         [Route("register")]
         public async Task<IActionResult> Register([FromBody] UserRegistrationRequest user)
@@ -88,38 +93,30 @@ namespace BuyMe.API.Controllers
             }
         }
 
+        /// <summary>
+        /// API to login user into the system
+        /// </summary>
         [HttpPost]
         public async Task<IActionResult> Login([FromBody] UserLoginRequest user)
         {
             if (ModelState.IsValid)
             {
                 var existingUser = await _userManager.FindByEmailAsync(user.Email);
-                if (existingUser == null)
-                {
-                    return BadRequest(new UserRegistrationResponse()
-                    {
-                        Error = new List<string>()
-                    {
-                        "Invalid login Request"
-                    },
-                        Success = false,
+                if (existingUser == null )
+                 {
+                     return BadRequest(new UserRegistrationResponse()
+                     {
+                         Error = new List<string>()
+                     {
+                         "Invalid login Request"
+                     },
+                         Success = false,
 
-                    });
-                }
+                     });
+                 }
                 var isCorrect = await _userManager.CheckPasswordAsync(existingUser, user.Password);
-                if(!isCorrect)
-                {
-                    return BadRequest(new UserRegistrationResponse()
-                    {
-                        Error = new List<string>()
-                    {
-                        "Invalid login Request"
-                    },
-                        Success = false,
-
-                    });
-                }
-                else
+                //var sm = await _signInManager.PasswordSignInAsync(existingUser, user.Password, false, falsr);
+                if(isCorrect)
                 {
                     var jwtToken = GenerateJwtToken(existingUser);
                     return Ok(new UserRegistrationResponse()
@@ -127,6 +124,19 @@ namespace BuyMe.API.Controllers
                         Success = true,
                         Token = jwtToken
                     });
+                }
+                else
+                {
+                    return BadRequest(new UserRegistrationResponse()
+                    {
+                        Error = new List<string>()
+                    {
+                        "Invalid login Request"
+                    },
+                        Success = false,
+
+                    });
+                   
                 }
             }
             else
@@ -143,6 +153,9 @@ namespace BuyMe.API.Controllers
             }
         }
 
+        /// <summary>
+        /// API for forget password
+        /// </summary>
         [HttpPost]
         [Route("forgetPassword")]
         public async Task<IActionResult> ForgetPassword([FromBody] ForgetPasswordRequest user)
@@ -185,7 +198,6 @@ namespace BuyMe.API.Controllers
             }
             else
             {
-                //var jwtToken = GenerateJwtToken(_user);
                 var jwtToken = await _userManager.GeneratePasswordResetTokenAsync(_user);
                 var result = await _userManager.ResetPasswordAsync(_user, jwtToken, user.NewPassword);
                 if (result.Succeeded)
@@ -207,71 +219,6 @@ namespace BuyMe.API.Controllers
 
             }
         }
-
-        /*[HttpPost]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [Route("resetPassword")]
-        public async Task<IActionResult> ResetPassword([FromBody] ResetPassowrdRequest data)
-        {
-            if(ModelState.IsValid)
-            {
-                var _user = await _userManager.FindByEmailAsync(data.Email);
-                if(_user == null)
-                {
-                    return BadRequest(new UserRegistrationResponse()
-                    {
-                        Error = new List<string>()
-                        {
-                            "User Email Not Found"
-                        },
-                        Success = false,
-
-                    });
-                }
-                if(data.NewPassword != data.ConfirmPassword)
-                {
-                    return BadRequest(new UserRegistrationResponse()
-                    {
-                        Error = new List<string>()
-                        {
-                            "New Password and Confirm Password Doesnot match"
-                        },
-                        Success = false,
-                    });
-                }
-
-                var user = await _userManager.ResetPasswordAsync(_user, data.Token, data.NewPassword);
-                if(user.Succeeded)
-                {
-                    return Ok(new UserRegistrationResponse()
-                    {
-                        Success = true,
-                    }) ; 
-                }
-                return BadRequest(new UserRegistrationResponse()
-                {
-                    Error = new List<string>()
-                    {
-                        "Invalid Payload"
-                    },
-                    Success = false,
-
-                });
-            }
-            else
-            {
-                return BadRequest(new UserRegistrationResponse()
-                {
-                    Error = new List<string>()
-                    {
-                        "Invalid Payload"
-                    },
-                    Success = false,
-
-                });
-            }
-        }*/
-
 
 
         private string GenerateJwtToken(IdentityUser user)
@@ -297,28 +244,5 @@ namespace BuyMe.API.Controllers
             return jwtToken;
         }
 
-        /*public async string ForgetPassword(string email)
-        {
-            var _user = await _userManager.FindByEmailAsync(email);
-            if (_user == null)
-            {
-                return new UserRegistrationResponse
-                {
-                    Error = new List<string>()
-                    {
-                        "Email ID Not Found"
-                    },
-                    Success = false,
-                };
-            }
-            *//*var token = await _userManager.GeneratePasswordResetTokenAsync(_user);
-            var encodedToken = Encoding.UTF8.GetBytes(token);
-            var validToken = WebEncoders.Base64UrlEncode(encodedToken);
-*//*
-            var jwtToken = GenerateJwtToken(_user);
-
-            return jwtToken;
-
-        }*/
     }
 }

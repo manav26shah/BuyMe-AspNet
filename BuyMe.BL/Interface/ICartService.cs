@@ -11,5 +11,6 @@ namespace BuyMe.BL.Interface
         Task<bool> AddToCart(CartBL newCart);
         Task<bool> UpdateToCart(CartBL newCart);
         Task<bool> DeleteFromCart(int productId);
+        Task<bool> Checkout(string userId);
     }
 }

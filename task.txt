@@ -1,0 +1,19 @@
+User - APIs
+ Register
+ Signin
+ ResetPassword
+Product
+ GetProduct - paginated
+ GetProductBasedOnCategory- paginated
+ GetProductBasedOnSearch-> product name partial match
+Order
+ GetAllOrders by a user
+Cart
+ AddItem to cart
+ UpdateItem in cart
+ RemoveItem in cart
+Checkout
+ Checkout API-> Convert cartitems into order->clear cart
+
+
+Deadline -> Before Tuesday's class (26th April 2022 6 PM)

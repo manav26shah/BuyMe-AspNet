@@ -32,7 +32,9 @@ namespace BuyMe.API.Controllers
             _logger = logger;
         }
 
-        // big amount of data 10k products
+        /// <summary>
+        /// API to Get products (paginated)
+        /// </summary>
         [HttpGet("{page}")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [ProducesResponseType(typeof(List<ProductResponse>), StatusCodes.Status200OK)]
@@ -71,6 +73,9 @@ namespace BuyMe.API.Controllers
             return Ok(response);
         }
 
+        /// <summary>
+        /// API to Get products based on Category ID
+        /// </summary>
         [HttpGet("category/{id}/{page}")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [ProducesResponseType(typeof(List<ProductResponse>), StatusCodes.Status200OK)]
@@ -151,8 +156,7 @@ namespace BuyMe.API.Controllers
 
         }
 
-        [HttpPut]
-
+        /*[HttpPut]
         public IActionResult UpdateExistingProduct()
         {
             return Ok("THis API is not complete");
@@ -162,6 +166,11 @@ namespace BuyMe.API.Controllers
         {
             return Ok();
         }
+*/
+
+        /// <summary>
+        /// API to Search Product (partial match)
+        /// </summary>
         [HttpGet("search/{exp}")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public IActionResult Search([FromRoute] string exp)
@@ -185,12 +194,12 @@ namespace BuyMe.API.Controllers
         }
 
         // you cannot return a response body , you can only return response headers
-        [HttpHead]
+       /* [HttpHead]
         public IActionResult TestAPi()
         {
             // do some calculation , query db etc for count etc
             HttpContext.Response.Headers.Add("response-size", "100");
             return Ok();
-        }
+        }*/
     }
 }

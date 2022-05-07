@@ -28,6 +28,9 @@ namespace BuyMe.API.Controllers
             _order = order;
         }
 
+        /// <summary>
+        /// API to Get all Orders
+        /// </summary>
         [HttpGet]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public IActionResult GetOrders()
@@ -41,11 +44,12 @@ namespace BuyMe.API.Controllers
                 retProducts.Add(new OrderResponse
                 {
                     Id = item.Id,
-                    //UserID = item.UserId,
                     ProductId = item.ProductId,
                 }); 
             }  // Auto mapper
             return Ok(retProducts);
         }
+
+      
     }
 }

@@ -17,6 +17,6 @@ namespace BuyMe.DL
 
         Task<bool> UpdateToCart(Cart cart);
         Task<bool> DeleteFromCart(int productId);
-
+        Task<bool> Checkout(string userId);
     }
 }

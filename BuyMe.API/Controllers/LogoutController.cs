@@ -1,8 +1,11 @@
 ﻿using BuyMe.BL.Interface;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System.Threading.Tasks;
 
 namespace BuyMe.API.Controllers
 {
@@ -10,28 +13,26 @@ namespace BuyMe.API.Controllers
     [ApiController]
     public class LogoutController : ControllerBase
     {
-        private ICartService _cartService;
-        private ILogger<CartController> _logger;
+        
+        private ILogger<LogoutController> _logger;
         private readonly UserManager<IdentityUser> _userManager;
-        private readonly IProductService _productService;
-        private readonly IOrderService _order;
+        private readonly SignInManager<IdentityUser> _signInManager;
 
-        public LogoutController(ICartService cartService, ILogger<CartController> logger, UserManager<IdentityUser> userManager, IProductService productService, IOrderService order)
+        public LogoutController(ILogger<LogoutController> logger, UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
         {
-            _cartService = cartService;
+           
             _logger = logger;
             _userManager = userManager;
-            _productService = productService;
-            _order = order;
+            _signInManager = signInManager;
+           
         }
 
-        [HttpGet]
-        public IActionResult Logout()
+        [HttpPost]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public async Task<IActionResult> Logout()
         {
-            //create new Order
-            //Copy info of cart into it 
-            //removeCart
-            //removeToken
+            await _signInManager.SignOutAsync();
+
             
             return Ok();
         }

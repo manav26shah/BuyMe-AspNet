@@ -41,5 +41,9 @@ namespace BuyMe.BL.Implementation
         {
             return await _repo.DeleteFromCart(productId);
         }
+        public async Task<bool> Checkout(string userId)
+        {
+            return await _repo.Checkout(userId);
+        }
     }
 }

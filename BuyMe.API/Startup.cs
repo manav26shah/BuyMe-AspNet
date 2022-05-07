@@ -105,7 +105,12 @@ namespace BuyMe.API
                     RequireExpirationTime = false
                 };
             });
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            services.AddDefaultIdentity<IdentityUser>(options =>
+            { options.SignIn.RequireConfirmedAccount = true;
+                options.Lockout = new LockoutOptions { MaxFailedAccessAttempts = 3 };
+            }
+            
+        )
                 .AddEntityFrameworkStores<AppDbContext>();
 
         }

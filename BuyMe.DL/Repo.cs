@@ -10,7 +10,7 @@ namespace BuyMe.DL
 {
 
     // Generic Repository pattern
-    public class Repo:IRepo
+    public class Repo : IRepo
     {
         private AppDbContext _dbContext;
 
@@ -19,7 +19,7 @@ namespace BuyMe.DL
             _dbContext = dbContext;
         }
 
-        public async  Task<bool> AddNewProduct(Product newProduct)
+        public async Task<bool> AddNewProduct(Product newProduct)
         {
             _dbContext.Products.Add(newProduct);
             var result = await _dbContext.SaveChangesAsync();
@@ -66,8 +66,8 @@ namespace BuyMe.DL
             {
                 result.Add((Product)_dbContext.Orders.Where(c => c.ProductId == order.ProductId));
             }
-            return result;*/ 
-           return _order.ToList();
+            return result;*/
+            return _order.ToList();
         }
 
         public async Task<bool> AddToCart(Cart cart)
@@ -83,7 +83,7 @@ namespace BuyMe.DL
         public async Task<bool> UpdateToCart(Cart cart)
         {
             var entity = _dbContext.Carts.FirstOrDefault(c => c.Email == cart.Email);
-            if(entity == null)
+            if (entity == null)
             {
                 return false;
             }
@@ -99,6 +99,29 @@ namespace BuyMe.DL
         public async Task<bool> DeleteFromCart(int productId)
         {
             var removeProduct = _dbContext.Carts.Where(c => c.ProductId == productId).First();
+            _dbContext.Carts.Remove(removeProduct);
+            var result = await _dbContext.SaveChangesAsync();
+            if (result == 1)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public async Task<bool> Checkout(string userId)
+        {
+            var productDetails = _dbContext.Carts.Where(c => c.Email == userId).First();
+            if (productDetails == null)
+            {
+                return false;
+            }
+            var newOrder = new Order
+            {
+                ProductId = productDetails.ProductId,
+                Email = productDetails.Email,
+            };
+            _dbContext.Orders.Add(newOrder);
+            var removeProduct = _dbContext.Carts.Where(c => c.ProductId == productDetails.ProductId).First();
             _dbContext.Carts.Remove(removeProduct);
             var result = await _dbContext.SaveChangesAsync();
             if (result == 1)
