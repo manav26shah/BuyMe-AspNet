@@ -27,7 +27,7 @@ namespace BuyMe.API.Controllers
            
         }
 
-        [HttpPost]
+       /* [HttpPost]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<IActionResult> Logout()
         {
@@ -35,6 +35,6 @@ namespace BuyMe.API.Controllers
 
             
             return Ok();
-        }
+        }*/
     }
 }

@@ -25,6 +25,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.OpenApi.Models;
 
 namespace BuyMe.API
 {
@@ -54,13 +55,43 @@ namespace BuyMe.API
       
         public void AddSwagger(IServiceCollection services)
         {
-            services.AddSwaggerGen(options=> {
+            /*services.AddSwaggerGen(options =>
+            {
                 var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var path = Path.Combine(AppContext.BaseDirectory, xmlFilename);
                 options.IncludeXmlComments(path);
+
+                options.AddSecurityDefinition(JwtBearerDefaults.AuthenticationScheme, new Microsoft.OpenApi.Models.OpenApiSecurityScheme
+                {
+                    Name = "Authorization",
+                    Type = Microsoft.OpenApi.Models.SecuritySchemeType.ApiKey,
+                    Scheme = JwtBearerDefaults.AuthenticationScheme,
+                    BearerFormat = "JWT",
+                    In = Microsoft.OpenApi.Models.ParameterLocation.Header
+                });
+
+                var scheme = new OpenApiSecurityScheme
+                {
+                    Reference = new OpenApiReference
+                    {
+                        Type = ReferenceType.SecurityScheme,
+                        Id = "Bearer"
+                    }
+                };
+                var req = new OpenApiSecurityRequirement();
+                req.Add(scheme, new List<string>());
+                options.AddSecurityRequirement(req);
             });
-        }
-        public void RegisterBusinessServces(IServiceCollection services)
+        }*/
+
+        services.AddSwaggerGen(options=> {
+            var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+            var path = Path.Combine(AppContext.BaseDirectory, xmlFilename);
+            options.IncludeXmlComments(path);
+        });
+      }
+    
+    public void RegisterBusinessServces(IServiceCollection services)
         {
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<IOrderService, OrderService>();

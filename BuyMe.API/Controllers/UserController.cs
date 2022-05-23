@@ -26,7 +26,7 @@ namespace BuyMe.API.Controllers
             _logger = logger;
         }
         
-        [HttpGet("{userId}")]
+      /*  [HttpGet("{userId}")]
         public IActionResult GetUserDetails([FromRoute]int userId)
         {
 
@@ -38,7 +38,7 @@ namespace BuyMe.API.Controllers
         public IActionResult RegisterUser([FromBody]RegisterUserRequest data)
         {
             return Ok();
-        }
+        }*/
         
     }
 }
