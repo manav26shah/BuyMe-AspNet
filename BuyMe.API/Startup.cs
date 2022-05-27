@@ -52,7 +52,7 @@ namespace BuyMe.API
             RegisterAuthentication(services);
         }
 
-      
+
         public void AddSwagger(IServiceCollection services)
         {
             /*services.AddSwaggerGen(options =>
@@ -84,11 +84,42 @@ namespace BuyMe.API
             });
         }*/
 
-        services.AddSwaggerGen(options=> {
-            var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-            var path = Path.Combine(AppContext.BaseDirectory, xmlFilename);
-            options.IncludeXmlComments(path);
-        });
+            /*services.AddSwaggerGen(options=> {
+                var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var path = Path.Combine(AppContext.BaseDirectory, xmlFilename);
+                options.IncludeXmlComments(path);
+            });*/
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "BuyMe", Version = "v1" });
+                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    In = ParameterLocation.Header,
+                    Description = "Please insert token",
+                    Name = "Authorization",
+                    Type = SecuritySchemeType.Http,
+                    BearerFormat = "JWT",
+                    Scheme = "bearer"
+                });
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type= ReferenceType.SecurityScheme,
+                                Id = "Bearer"
+                            }
+                        },
+                        new string[]{}
+                    }
+                });
+                var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var path = Path.Combine(AppContext.BaseDirectory, xmlFilename);
+                c.IncludeXmlComments(path);
+            });
       }
     
     public void RegisterBusinessServces(IServiceCollection services)
@@ -160,6 +191,7 @@ namespace BuyMe.API
             
             app.UseSwagger();
             app.UseSwaggerUI();
+
             app.AddCustomHeader();
             app.UseHttpsRedirection();
             

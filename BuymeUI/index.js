@@ -10,7 +10,7 @@ function Login(){
             'Content-Type':'application/json'
         },
         body: JSON.stringify({
-            "emailId":email,
+            "email":email,
             "password":password
         })
     }).then(res=>{
