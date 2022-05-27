@@ -12,14 +12,15 @@ function register(){
     }
 
     //call api
-    fetch('https://localhost:44332/api/register',{
+    fetch('https://localhost:44332/api/Login/register',{
         method:'POST',
+        dataType: 'JSON',
         headers:{
             'Content-Type':'application/json'
         },
         body: JSON.stringify({
             "userName":username,
-            "emailId":email,
+            "email":email,
             "password":password
         })
     }).then(res=>{

@@ -110,7 +110,7 @@ namespace BuyMe.DL
 
         public async Task<bool> Checkout(string userId)
         {
-            var productDetails = _dbContext.Carts.Where(c => c.Email == userId).First();
+            var productDetails = _dbContext.Carts.FirstOrDefault(c=> c.Email == userId); //Where(c => c.Email == userId).First();
             if (productDetails == null)
             {
                 return false;
@@ -121,7 +121,12 @@ namespace BuyMe.DL
                 Email = productDetails.Email,
             };
             _dbContext.Orders.Add(newOrder);
-            var removeProduct = _dbContext.Carts.Where(c => c.ProductId == productDetails.ProductId).First();
+            var removeProduct = _dbContext.Carts.FirstOrDefault(c => c.ProductId == productDetails.ProductId);
+            //Where(c => c.ProductId == productDetails.ProductId).First();
+            if(removeProduct == null)
+            {
+                return false;
+            }
             _dbContext.Carts.Remove(removeProduct);
             var result = await _dbContext.SaveChangesAsync();
             if (result == 1)

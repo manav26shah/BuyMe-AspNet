@@ -164,6 +164,12 @@ namespace BuyMe.API
             app.UseHttpsRedirection();
             
             app.UseRouting(); // this middleware decides which action method from which controler call, what value to apss, in the querystring 
+            app.UseCors(options =>
+            {
+                options.AllowAnyMethod();
+                options.AllowAnyHeader();
+                options.AllowAnyOrigin();
+            });
             app.UseAuthentication();
             app.UseAuthorization();
 
